@@ -1,6 +1,6 @@
 {
-  "name": "gql-generator",
-  "version": "1.0.19",
+  "name": "@williamyin/gql-generator",
+  "version": "1.0.1",
   "description": "",
   "main": "index.js",
   "bin": {
@@ -20,6 +20,11 @@
     "generator"
   ],
   "author": "timqian",
+  "contributors": [
+    {
+      "name": "williamyin"
+    }
+  ],
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/timqian/gql-generator/issues"
