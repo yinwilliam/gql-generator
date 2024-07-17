@@ -41,20 +41,25 @@ function main({
    * @param duplicateArgCounts map for deduping argument name collisions
    * @param allArgsDict dictionary of all arguments
    */
-  const getFieldArgsDict = (field, duplicateArgCounts, allArgsDict = {}) =>
-    field.args.reduce((o, arg) => {
-      if (arg.name in duplicateArgCounts) {
-        const index = duplicateArgCounts[arg.name] + 1;
-        duplicateArgCounts[arg.name] = index;
-        o[`${arg.name}${index}`] = arg;
-      } else if (allArgsDict[arg.name]) {
-        duplicateArgCounts[arg.name] = 1;
-        o[`${arg.name}1`] = arg;
+  const getFieldArgsDict = (field, duplicateArgCounts, allArgsDict = {}) => {
+    const argDict = {};
+    field.args.forEach((arg) => {
+      let argName = arg.name;
+
+      // Check if the argument name has been used already
+      if (argName in argDict) {
+        const index = (duplicateArgCounts[argName] || 0) + 1;
+        duplicateArgCounts[argName] = index;
+        argName = `${arg.name}${index}`; // Append index to make it unique
       } else {
-        o[arg.name] = arg;
+        duplicateArgCounts[argName] = 0; // Initialize count for unique names
       }
-      return o;
-    }, {});
+
+      // Add the argument to the dictionary
+      argDict[argName] = arg;
+    });
+    return argDict;
+  };
 
   /**
    * Generate variables string
